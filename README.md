@@ -1,15 +1,50 @@
 # git-workbench
 
-OpenCode Desktop 的 Git 面板插件，基于 OpenCode V2 的 GUI 插件 SDK（`@opencode/plugin/gui`）。
+A Git panel plugin for OpenCode Desktop, built on the OpenCode V2 GUI plugin SDK (`@opencode/plugin/gui`).
 
-## 功能
+**English** | [简体中文](README.zh-CN.md)
 
-- **Changes**：查看已暂存/未暂存文件、逐文件暂存与取消暂存、查看 unified diff、填写提交信息并提交（支持 `--amend`）。
-- **Graph**：按 lane 绘制提交历史，支持当前分支/所有分支切换、refs 标签、作者与时间、分批加载。
-- 中英文界面，跟随 OpenCode 语言设置。
-- 所有 Git 命令在主进程通过 `execFile` 执行，不经过 shell。
+## Features
 
-## 开发
+- **Changes** — view staged and unstaged files, stage or unstage per file, inspect unified diffs, write a commit message and commit (with `--amend` support).
+- **Graph** — commit history drawn in lanes, with current-branch / all-branches switch, ref labels, author and relative time, and incremental loading.
+- English and Simplified Chinese UI, following OpenCode's language setting.
+- All Git commands run in the Electron main process through `execFile`, never through a shell.
+
+## Requirements
+
+- OpenCode Desktop. The GUI plugin API is experimental, so a future OpenCode upgrade may require adapting this plugin.
+- Node.js 22.6 or newer for development (`npm test` relies on `--experimental-strip-types`).
+
+## Installation
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/GerZhang/opencode-git.git
+cd opencode-git
+npm install
+```
+
+Add the local plugin directory to `~/.config/opencode/opencode.jsonc`:
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": ["/absolute/path/to/opencode-git"]
+}
+```
+
+Restart OpenCode Desktop, then either:
+
+- pick **Git** from the `+` menu in the session sidebar, or
+- run **Open Git** from the command palette.
+
+The plugin is listed under **Settings > Extensions > Plugins** and can be disabled there.
+
+`dist/gui-experimental.cjs` is committed, so the plugin loads without a build step. Run `npm run build` after changing the source.
+
+## Development
 
 ```bash
 npm install
@@ -18,53 +53,39 @@ npm test
 npm run build
 ```
 
-监听构建：
+Watch mode:
 
 ```bash
 npm run watch
 ```
 
-重新构建后 OpenCode Desktop 会自动重新加载该插件的 GUI，不需要重启应用。
+OpenCode Desktop reloads the plugin's GUI automatically after a rebuild; no app restart is needed.
 
-## 安装
-
-在全局 `~/.config/opencode/opencode.jsonc` 中加入本地插件目录：
-
-```jsonc
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugins": ["/Users/gerald/Develop/Default/opencode"]
-}
-```
-
-打开 OpenCode Desktop 后：
-
-- 在会话侧边栏的 `+` 菜单选择 **Git**；或
-- 命令面板执行 **Open Git**。
-
-插件会显示在 **Settings > Extensions > Plugins**，可以单独关闭。
-
-## 结构
+## Project structure
 
 ```text
 src/
-├── index.ts              Server 部分：声明插件 id `git-workbench`
-├── gui.tsx               GUI 入口：合并声明、窗口 setup 与 main
+├── index.ts              Server part: declares the plugin id `git-workbench`
+├── gui.tsx               GUI entry: combines declarations, window setup and main
 ├── gui/
-│   ├── contract.ts       main ↔ window 的 typed IPC（Effect Schema）
-│   ├── definition.ts     i18n 声明
-│   ├── main.ts           Electron 主进程：注册 Git IPC 实现
-│   ├── window.tsx        窗口：Panel / Command / MenuItem / Style
-│   ├── GitPanel.tsx      Changes 与 Graph UI
-│   └── styles.ts         注入到文档的 CSS
+│   ├── contract.ts       Typed IPC between main and window (Effect Schema)
+│   ├── definition.ts     i18n declarations
+│   ├── main.ts           Electron main process: registers the Git IPC implementation
+│   ├── window.tsx        Window: Panel / Command / MenuItem / Style
+│   ├── GitPanel.tsx      Changes and Graph UI
+│   └── styles.ts         CSS injected into the document
 └── git/
-    ├── service.ts        Git 命令与解析（status/log/diff/stage/commit）
-    └── graph.ts          提交历史的 lane 布局
+    ├── service.ts        Git commands and parsing (status/log/diff/stage/commit)
+    └── graph.ts          Lane layout for commit history
 ```
 
-## 说明
+## Notes
 
-- GUI 插件 API 目前在 OpenCode 中是实验性的（`./gui-experimental`），版本升级后可能需要适配。
-- 当前版本不做 push、pull、checkout、rebase 或丢弃变更，只覆盖查看历史与提交。
-- 文件变更不会自动轮询，使用面板右上角的刷新按钮或执行任意 Git 操作后刷新。
-- 提交会触发仓库自身的 hooks；如果配置了 GPG 签名，签名失败会直接显示在面板错误栏。
+- The GUI plugin API is experimental in OpenCode (`./gui-experimental`); expect adjustments across upgrades.
+- This version does not push, pull, checkout, rebase or discard changes — it only covers inspecting history and committing.
+- File changes are not polled automatically. Use the refresh button in the panel header, or let any Git action refresh the view.
+- Commits run the repository's own hooks. If GPG signing is configured, a signing failure is shown in the panel's error bar.
+
+## License
+
+[MIT](LICENSE)
