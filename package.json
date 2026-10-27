@@ -1,5 +1,5 @@
 {
-  "name": "git-workbench",
+  "name": "opencode-git-workbench",
   "version": "0.1.0",
   "description": "Git changes, commit and history graph panel for OpenCode Desktop",
   "type": "module",

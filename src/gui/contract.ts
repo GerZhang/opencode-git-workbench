@@ -52,7 +52,7 @@ const CommitResult = Schema.Struct({
 })
 
 export const GitIpc = Ipc.define({
-  id: "git-workbench.git",
+  id: "opencode-git-workbench.git",
   methods: {
     snapshot: {
       input: Schema.Struct({

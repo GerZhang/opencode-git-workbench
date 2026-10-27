@@ -1,4 +1,4 @@
-# git-workbench
+# opencode-git-workbench
 
 OpenCode Desktop 的 Git 面板插件，基于 OpenCode V2 的 GUI 插件 SDK（`@opencode/plugin/gui`）。
 
@@ -21,8 +21,8 @@ OpenCode Desktop 的 Git 面板插件，基于 OpenCode V2 的 GUI 插件 SDK（
 克隆仓库并安装依赖：
 
 ```bash
-git clone https://github.com/GerZhang/opencode-git.git
-cd opencode-git
+git clone https://github.com/GerZhang/opencode-git-workbench.git
+cd opencode-git-workbench
 npm install
 ```
 
@@ -65,7 +65,7 @@ npm run watch
 
 ```text
 src/
-├── index.ts              Server 部分：声明插件 id `git-workbench`
+├── index.ts              Server 部分：声明插件 id `opencode-git-workbench`
 ├── gui.tsx               GUI 入口：合并声明、窗口 setup 与 main
 ├── gui/
 │   ├── contract.ts       main ↔ window 的 typed IPC（Effect Schema）

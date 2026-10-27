@@ -1,4 +1,4 @@
-# git-workbench
+# opencode-git-workbench
 
 A Git panel plugin for OpenCode Desktop, built on the OpenCode V2 GUI plugin SDK (`@opencode/plugin/gui`).
 
@@ -21,8 +21,8 @@ A Git panel plugin for OpenCode Desktop, built on the OpenCode V2 GUI plugin SDK
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/GerZhang/opencode-git.git
-cd opencode-git
+git clone https://github.com/GerZhang/opencode-git-workbench.git
+cd opencode-git-workbench
 npm install
 ```
 
@@ -65,7 +65,7 @@ OpenCode Desktop reloads the plugin's GUI automatically after a rebuild; no app 
 
 ```text
 src/
-├── index.ts              Server part: declares the plugin id `git-workbench`
+├── index.ts              Server part: declares the plugin id `opencode-git-workbench`
 ├── gui.tsx               GUI entry: combines declarations, window setup and main
 ├── gui/
 │   ├── contract.ts       Typed IPC between main and window (Effect Schema)

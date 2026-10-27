@@ -11,5 +11,5 @@ export const main: Plugin.MainSetup = (ctx) => {
     commit: (input) => git.commit(input),
   })
 
-  ctx.log.write("info", "git-workbench ready", { version: ctx.app.version })
+  ctx.log.write("info", "opencode-git-workbench ready", { version: ctx.app.version })
 }
